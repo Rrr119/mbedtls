@@ -1150,6 +1150,48 @@ exit:
 /* END_CASE */
 
 /* BEGIN_CASE depends_on:MBEDTLS_X509_CRT_PARSE_C */
+void x509_name_constraints_parse(data_t *buf, int result,
+                                 int permitted_subtrees,
+                                 int excluded_subtrees)
+{
+    unsigned char *p = buf->x;
+    size_t permitted = 0;
+    size_t excluded = 0;
+
+    TEST_EQUAL(mbedtls_x509_get_name_constraints(&p, buf->x + buf->len,
+                                                 &permitted, &excluded),
+               result);
+
+    if (result == 0) {
+        TEST_ASSERT(p == buf->x + buf->len);
+        TEST_EQUAL(permitted, (size_t) permitted_subtrees);
+        TEST_EQUAL(excluded, (size_t) excluded_subtrees);
+    }
+}
+/* END_CASE */
+
+/* BEGIN_CASE depends_on:MBEDTLS_X509_CRT_PARSE_C */
+void x509_crt_parse_name_constraints(data_t *buf)
+{
+    mbedtls_x509_crt crt;
+
+    mbedtls_x509_crt_init(&crt);
+    USE_PSA_INIT();
+    TEST_EQUAL(mbedtls_x509_crt_parse_der(&crt, buf->x, buf->len), 0);
+    TEST_ASSERT((crt.MBEDTLS_PRIVATE(ext_types) &
+                 MBEDTLS_X509_EXT_NAME_CONSTRAINTS) != 0);
+    TEST_ASSERT(crt.name_constraints.len > 0);
+    TEST_ASSERT(crt.name_constraints.p >= crt.raw.p);
+    TEST_ASSERT(crt.name_constraints.p + crt.name_constraints.len <=
+                crt.raw.p + crt.raw.len);
+
+exit:
+    mbedtls_x509_crt_free(&crt);
+    USE_PSA_DONE();
+}
+/* END_CASE */
+
+/* BEGIN_CASE depends_on:MBEDTLS_X509_CRT_PARSE_C */
 void x509parse_crt(data_t *buf, char *result_str, int result)
 {
     mbedtls_x509_crt   crt;

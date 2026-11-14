@@ -34,6 +34,22 @@ make
 ```
 Finally, you can run the targets like `./test/fuzz/fuzz_client`.
 
+Name constraints fuzzing
+------
+
+`fuzz_x509_name_constraints` takes a complete DER certificate as input. The
+certificate parser validates the ASN.1 structure of the `nameConstraints`
+extension, including DNS wildcards, IP network/mask pairs, directory names and
+multiple permitted or excluded subtrees.
+
+The target can be built and run for 60 seconds with a bundled corpus and
+dictionary, without downloading anything:
+```
+programs/fuzz/run_x509_name_constraints.sh
+```
+Pass a different duration in seconds as the first argument. Set `CLANG` to a
+clang executable if it is not in `PATH`.
+
 
 Corpus generation for network traffic targets
 ------

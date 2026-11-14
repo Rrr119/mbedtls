@@ -65,6 +65,7 @@ typedef struct mbedtls_x509_crt {
     mbedtls_x509_sequence subject_alt_names; /**< Optional list of raw entries of Subject Alternative Names extension. These can be later parsed by mbedtls_x509_parse_subject_alt_name. */
     mbedtls_x509_buf subject_key_id;    /**< Optional X.509 v3 extension subject key identifier. */
     mbedtls_x509_authority authority_key_id;    /**< Optional X.509 v3 extension authority key identifier. */
+    mbedtls_x509_buf name_constraints;  /**< Optional raw value of the X.509 v3 name constraints extension. The extension is validated while parsing the certificate. */
 
     mbedtls_x509_sequence certificate_policies; /**< Optional list of certificate policies (Only anyPolicy is printed and enforced, however the rest of the policies are still listed). */
 

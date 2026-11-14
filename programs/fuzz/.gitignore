@@ -6,3 +6,4 @@ fuzz_server
 fuzz_x509crl
 fuzz_x509crt
 fuzz_x509csr
+fuzz_x509_name_constraints

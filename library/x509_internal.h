@@ -66,6 +66,10 @@ int mbedtls_x509_get_subject_alt_name(unsigned char **p,
 int mbedtls_x509_get_subject_alt_name_ext(unsigned char **p,
                                           const unsigned char *end,
                                           mbedtls_x509_sequence *subject_alt_name);
+int mbedtls_x509_get_name_constraints(unsigned char **p,
+                                      const unsigned char *end,
+                                      size_t *permitted_subtrees,
+                                      size_t *excluded_subtrees);
 int mbedtls_x509_info_subject_alt_name(char **buf, size_t *size,
                                        const mbedtls_x509_sequence
                                        *subject_alt_name,

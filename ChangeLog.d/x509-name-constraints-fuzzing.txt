@@ -1,0 +1,4 @@
+Features
+   * Parse and structurally validate X.509 nameConstraints extensions when
+     parsing certificates. The extension remains available as raw DER in
+     mbedtls_x509_crt for applications that need to inspect it.
